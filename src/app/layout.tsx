@@ -4,8 +4,8 @@ import {TopBar} from "@/components/TopBar";
 import {Auth0ProviderWrapper} from "@/components/Auth0ProviderWrapper";
 
 export const metadata: Metadata = {
-    title: 'v0 App',
-    description: 'Created with v0',
+    title: 'Msa app',
+    description: 'Created with help from the god emperor',
 }
 
 export default function RootLayout({
