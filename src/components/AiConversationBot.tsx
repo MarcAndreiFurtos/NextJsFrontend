@@ -173,7 +173,7 @@ export default function AiConversationBot() {
     const fetchChats = async () => {
         try {
             let headers: Record<string, string> = {
-                "Accept": "application/json", // Ensure the response is JSON
+                "Accept": "text/plain", // Accept raw text response
             };
 
             if (isAuthenticated) {
@@ -181,9 +181,11 @@ export default function AiConversationBot() {
                 headers["Authorization"] = `Bearer ${token}`;
             }
 
+            // Set mode to 'no-cors' to bypass CORS enforcement (but be aware it limits some features)
             const response = await fetch('https://be09-20-33-110-63.ngrok-free.app/api/chats', {
-                method: 'GET', // Explicitly specify GET method
+                method: 'GET',
                 headers: headers,
+                mode: 'no-cors'  // Bypassing CORS restrictions
             });
 
             console.log("Response:", response);
@@ -192,11 +194,7 @@ export default function AiConversationBot() {
             const responseText = await response.text();
             console.log("Raw response body:", responseText);
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            // Attempt to parse as JSON
+            // Attempt to parse the raw text as JSON
             const data = JSON.parse(responseText);
             setChats(data); // Set chats directly without sorting
         } catch (error) {
@@ -208,6 +206,7 @@ export default function AiConversationBot() {
             });
         }
     };
+
 
 
 
