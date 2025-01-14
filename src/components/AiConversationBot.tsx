@@ -172,18 +172,29 @@ export default function AiConversationBot() {
 
     const fetchChats = async () => {
         try {
-            let headers: Record<string, string> = {};
+            let headers: Record<string, string> = {
+                "Accept": "application/json", // Ensure the response is JSON
+            };
+
             if (isAuthenticated) {
                 const token = await getAccessTokenSilently();
-                headers = { Authorization: `Bearer ${token}` };
+                headers["Authorization"] = `Bearer ${token}`;
             }
 
-            const response = await fetch('https://be09-20-33-110-63.ngrok-free.app/api/chats', { headers });
+            const response = await fetch('https://be09-20-33-110-63.ngrok-free.app/api/chats', {
+                method: 'GET', // Explicitly specify GET method
+                headers: headers,
+            });
+
             console.log("Response:", response);
 
             // Check raw response content
             const responseText = await response.text();
             console.log("Raw response body:", responseText);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
 
             // Attempt to parse as JSON
             const data = JSON.parse(responseText);
@@ -197,6 +208,7 @@ export default function AiConversationBot() {
             });
         }
     };
+
 
 
     const formatText = (text: string | null) => {
