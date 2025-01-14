@@ -134,7 +134,7 @@ export default function AiConversationBot() {
             const token = await getAccessTokenSilently()
 
             // Send POST request to the specified IP address with no-cors mode
-            const response = await fetch('https://8668-164-92-130-103.ngrok-free.app/generate', {
+            const response = await fetch('https://bfd7-164-92-130-103.ngrok-free.app/generate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -172,24 +172,32 @@ export default function AiConversationBot() {
 
     const fetchChats = async () => {
         try {
-            let headers: Record<string, string> = {}
+            let headers: Record<string, string> = {};
             if (isAuthenticated) {
-                const token = await getAccessTokenSilently()
-                headers = { Authorization: `Bearer ${token}` }
+                const token = await getAccessTokenSilently();
+                headers = { Authorization: `Bearer ${token}` };
             }
-            const response = await fetch('https://be09-20-33-110-63.ngrok-free.app/api/chats', { headers })
-            console.log(response)
-            const data = await response.json()
-            setChats(data) // Set chats directly without sorting
+
+            const response = await fetch('https://be09-20-33-110-63.ngrok-free.app/api/chats', { headers });
+            console.log("Response:", response);
+
+            // Check raw response content
+            const responseText = await response.text();
+            console.log("Raw response body:", responseText);
+
+            // Attempt to parse as JSON
+            const data = JSON.parse(responseText);
+            setChats(data); // Set chats directly without sorting
         } catch (error) {
-            console.error('Error fetching chats:', error)
+            console.error('Error fetching chats:', error);
             toast({
                 title: "Error",
                 description: "Failed to fetch chats. Please try again later.",
                 variant: "destructive",
-            })
+            });
         }
-    }
+    };
+
 
     const formatText = (text: string | null) => {
         return text ? text.replace(/_/g, ' ') : '';
