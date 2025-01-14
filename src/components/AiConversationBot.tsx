@@ -134,7 +134,7 @@ export default function AiConversationBot() {
             const token = await getAccessTokenSilently()
 
             // Send POST request to the specified IP address with no-cors mode
-            const response = await fetch('http://192.168.1.132:5000/generate', {
+            const response = await fetch('https://8668-164-92-130-103.ngrok-free.app/generate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -177,7 +177,7 @@ export default function AiConversationBot() {
                 const token = await getAccessTokenSilently()
                 headers = { Authorization: `Bearer ${token}` }
             }
-            const response = await fetch('http://localhost:8080/api/chats', { headers })
+            const response = await fetch('https://be09-20-33-110-63.ngrok-free.app/api/chats', { headers })
             const data = await response.json()
             setChats(data) // Set chats directly without sorting
         } catch (error) {
