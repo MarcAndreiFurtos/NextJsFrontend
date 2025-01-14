@@ -173,42 +173,24 @@ export default function AiConversationBot() {
     const fetchChats = async () => {
         try {
             let headers: Record<string, string> = {
-                "Accept": "text/plain", // Accept raw text response
-            };
-
-            if (isAuthenticated) {
-                const token = await getAccessTokenSilently();
-                headers["Authorization"] = `Bearer ${token}`;
+                'ngrok-skip-browser-warning': 'true'  // Add this line to include the ngrok header
             }
-
-            // Set mode to 'no-cors' to bypass CORS enforcement (but be aware it limits some features)
-            const response = await fetch('https://be09-20-33-110-63.ngrok-free.app/api/chats', {
-                method: 'GET',
-                headers: headers,
-                mode: 'no-cors'  // Bypassing CORS restrictions
-            });
-
-            console.log("Response:", response);
-
-            // Check raw response content
-            const responseText = await response.text();
-            console.log("Raw response body:", responseText);
-
-            // Attempt to parse the raw text as JSON
-            const data = JSON.parse(responseText);
-            setChats(data); // Set chats directly without sorting
+            if (isAuthenticated) {
+                const token = await getAccessTokenSilently()
+                headers = { ...headers, Authorization: `Bearer ${token}` }  // Spread the existing headers
+            }
+            const response = await fetch('https://be09-20-33-110-63.ngrok-free.app/api/chats', { headers })
+            const data = await response.json()
+            setChats(data) // Set chats directly without sorting
         } catch (error) {
-            console.error('Error fetching chats:', error);
+            console.error('Error fetching chats:', error)
             toast({
                 title: "Error",
                 description: "Failed to fetch chats. Please try again later.",
                 variant: "destructive",
-            });
+            })
         }
-    };
-
-
-
+    }
 
     const formatText = (text: string | null) => {
         return text ? text.replace(/_/g, ' ') : '';
