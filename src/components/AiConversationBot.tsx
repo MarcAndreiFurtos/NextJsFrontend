@@ -179,7 +179,7 @@ export default function AiConversationBot() {
                 const token = await getAccessTokenSilently()
                 headers = { ...headers, Authorization: `Bearer ${token}` }  // Spread the existing headers
             }
-            const response = await fetch('https://be09-20-33-110-63.ngrok-free.app/api/chats', { headers })
+            const response = await fetch('https://c3a5-164-92-130-103.ngrok-free.app/api/chats', { headers })
             const data = await response.json()
             setChats(data) // Set chats directly without sorting
         } catch (error) {
