@@ -134,7 +134,7 @@ export default function AiConversationBot() {
             const token = await getAccessTokenSilently()
 
             // Send POST request to the specified IP address with no-cors mode
-            const response = await fetch('https://2b31-164-92-130-103.ngrok-free.app/generate', {
+            const response = await fetch('https://ef7b-164-92-130-103.ngrok-free.app/generate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
